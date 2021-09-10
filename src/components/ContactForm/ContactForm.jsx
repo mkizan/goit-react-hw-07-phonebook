@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-// import { contactOperations, contactSelectors } from 'redux/contact';
-import contactSelectors from '../../redux/contact/contact-selectors';
-import contactOperations from '../../redux/contact/contact-operations';
+import { contactOperations, contactSelectors } from 'redux/contact';
 import styles from './ContactForm.module.scss';
 
 function ContactForm() {
