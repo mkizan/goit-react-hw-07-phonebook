@@ -24,7 +24,7 @@ const fetchContacts = () => async dispatch => {
   }
 };
 
-const addContact = (text, number) => dispatch => {
+const addContact = (text, number) => async dispatch => {
   const contact = {
     name: text,
     phone: number,
@@ -32,19 +32,23 @@ const addContact = (text, number) => dispatch => {
 
   dispatch(addContactRequest());
 
-  axios
-    .post('/contacts', contact)
-    .then(({ data }) => dispatch(addContactSuccess(data)))
-    .catch(error => addContactError(error));
+  try {
+    const { data } = await axios.post('/contacts', contact);
+    dispatch(addContactSuccess(data));
+  } catch (error) {
+    dispatch(addContactError(error));
+  }
 };
 
-const deleteContact = contactId => dispatch => {
+const deleteContact = contactId => async dispatch => {
   dispatch(deleteContactRequest());
 
-  axios
-    .delete(`/contacts/${contactId}`)
-    .then(() => dispatch(deleteContactSuccess(contactId)))
-    .catch(error => dispatch(deleteContactError(error)));
+  try {
+    await axios.delete(`/contacts/${contactId}`);
+    dispatch(deleteContactSuccess(contactId));
+  } catch (error) {
+    dispatch(deleteContactError(error));
+  }
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
